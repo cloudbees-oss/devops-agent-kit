@@ -1,0 +1,45 @@
+---
+description: DevOps triage and security analysis patterns
+globs:
+alwaysApply: true
+---
+
+# DevOps Analysis Patterns
+
+## Failure Classification
+
+When triaging a failed CI run, classify the root cause:
+
+| Category | Indicators | Examples |
+|----------|-----------|----------|
+| **CONFIG** | Validation errors, missing inputs, invalid references | YAML syntax error, missing `folder-name` input, bad action version |
+| **CODE** | Build/compile/test steps fail after checkout succeeds | Compilation error, test assertion failure, lint violation |
+| **SECURITY** | Security scan step fails | Gitleaks finding, SAST vulnerability, SCA dependency issue |
+| **ENVIRONMENT** | Timeouts, connection errors, resource issues | Runner unavailable, OOM kill, network timeout, disk full |
+| **KNOWN** | Same step + same error pattern as a previous triage | Recurring flaky step, known infrastructure issue |
+
+## Security Prioritization
+
+Rank findings by:
+1. Critical severity (immediate action)
+2. High severity with approaching SLA deadline
+3. High severity
+4. Medium severity
+5. Low severity
+
+For each finding, always include: finding type, file path, line number, SLA due date.
+
+## CI Health Scoring
+
+Calculate a 0-100 score based on:
+- Pass rate: 35% weight
+- Controller health: 20% weight
+- Security posture: 25% weight
+- Queue efficiency: 20% weight
+
+## Known Quirks
+
+- `logs_list` may return HTTP 500 — fall back to step names and statuses
+- `controllers_data_get` widgets ci5, ci6, ci7 may return empty — skip gracefully
+- `organizations_suborg_report` widgets s4, s5 may return "No Data Found" at org level — use component-level tools instead
+- Always skip runs with workflow names containing "code_scan" (infrastructure-managed scans)

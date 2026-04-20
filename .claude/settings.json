@@ -1,0 +1,48 @@
+{
+  "mcpServers": {
+    "cloudbees-unify": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run", "--rm", "-i",
+        "-e", "CLOUDBEES_API_TOKEN",
+        "cloudbees/unify-mcp-server:9c4153e2084a18a82fe746605170c610e203e1d8",
+        "stdio",
+        "--credential=CLOUDBEES_API_TOKEN",
+        "--organization-id=${CLOUDBEES_ORG_ID}",
+        "--toolsets=all=r"
+      ]
+    },
+    "jira": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "mcp-atlassian==0.21.1", "mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "${JIRA_URL}",
+        "JIRA_USERNAME": "${JIRA_USERNAME}",
+        "JIRA_API_TOKEN": "${JIRA_API_TOKEN}"
+      }
+    },
+    "slack": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@zencoderai/slack-mcp-server@0.0.1"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Read", "Grep", "Glob", "WebFetch",
+      "Bash(git *)", "Bash(npm *)", "Bash(gh *)",
+      "mcp__cloudbees-unify__*",
+      "mcp__jira__*",
+      "mcp__slack__*"
+    ],
+    "deny": [
+      "Bash(rm -rf *)", "Bash(sudo *)"
+    ]
+  }
+}

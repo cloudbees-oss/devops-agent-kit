@@ -1,0 +1,8 @@
+.env
+.env.*
+.mcp.json
+docs/TEST-PLAN.md
+screenshots/
+stderr.txt
+stdout.txt
+*:Zone.Identifier
