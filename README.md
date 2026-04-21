@@ -4,6 +4,8 @@ Turn your AI coding assistant into a DevOps specialist. Clone this repo, open it
 
 > **This is a demo and community reference project maintained by CloudBees DevRel. It is not production-hardened, not a CloudBees product, and not covered by CloudBees support. Use at your own risk and review all configurations before connecting to production systems.**
 
+> **[Read the blog post](https://www.cloudbees.com/blog/how-to-build-devops-agent)** | **[Watch the video walkthrough](https://cloudbees.wistia.com/medias/81bw3rxecn)** (21 min)
+
 ## What it does
 
 The DevOps Agent connects to your CI/CD tools via [MCP](https://modelcontextprotocol.io/) and gives you:
